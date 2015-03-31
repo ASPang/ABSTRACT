@@ -31,12 +31,12 @@ body {
     width: 800px;
     height: auto;
     text-align: left;
-    margin: auto;
+    /*margin: auto;*/
 }
 
 
 #gameContent {
-    height: auto;
+    /*height: auto;*/
 }
 
 canvas {
@@ -46,7 +46,7 @@ canvas {
 }
 
 .gameMenuDiv, #gameStartDiv {
-    margin: auto;
+    /*margin: auto;*/
     
     width: 300px;    /*imgBlock x 6*/
     height: auto;   /*imgBlock x 8*/

@@ -129,7 +129,7 @@ function setupInterfaces() {
 
    /*Set up the intro/menu interface*/
    backgroundImg.introBackground(gameImage.loadedImg["introMenuBgd"], 0, 0, 500, 500); //Set up the background
-   backgroundImg.setTitle("A Blue Spy Tracking Red Assassins Causing Trouble", 15, 250, "bold 21px Arial" );//Set up the title
+   backgroundImg.setTitle("A Blue Spy Tracking Red Assassin Causing Trouble", 15, 250, "bold 21px Arial" );//Set up the title
    backgroundImg.setStartButton("Start", 200, 325, "bold 24px Arial" );  //Set up the start button
    
    /*Set up the Game Over Interface screen*/
@@ -165,8 +165,8 @@ function setupObstacles() {
 /*Set up the character*/
 function setupCharacter(gameCanvas) {
     /*Size of character*/
-    var height = 100;
-    var width = 100;
+    var height = 50;
+    var width = 50;
     var cord = [], x, y, gridPos;
     
     var colour = "red";

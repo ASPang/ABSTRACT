@@ -20,7 +20,8 @@ function mouseClick(e) {
    var button;
    
    button = mouseLoc(e);
-   console.log("buttoncomeback = " + button);
+   //console.log("buttoncomeback = " + button);
+   
    /*Determine the action for the appropriate button*/
    if (button == "startButton" || button == "newGame") { //Start game button
       if (button == "newGame") {  //Reset up the canvas for a new game
@@ -59,10 +60,7 @@ function mouseClick(e) {
          /*Player didn't find the enemy*/
          backgroundImg.gameRef.winner = "enemy";
          endGameFlag = true;
-         backgroundMusic.pause();
-         backgroundMusic = new Audio("mp3/cutscene14.mp3"); 
-         backgroundMusic.play(); 
-         backgroundMusic.volume = 1.0;
+         changeBgdMusic("mp3/cutscene14.mp3", 1.0);
       }
 }
  
@@ -80,7 +78,6 @@ function mouseLoc(e) {
    x -= backgroundImg.canvas.offsetLeft;
    y -= backgroundImg.canvas.offsetTop;
   
-  //console.log(backgroundImg.buttonName.length + backgroundImg.buttonName[backgroundImg.buttonName.length - 1]);
   /*Determine a button is selected*/
   numButton = backgroundImg.buttonName.length;
   
@@ -90,8 +87,7 @@ function mouseLoc(e) {
      bY = buttonName.y;
      bWidth = buttonName.width;
      bHeight = buttonName.height;
-     //console.log("total number of buttons = " + numButton);
-     //console.log(x + " " + y + " " + bX + " " + bY);  //TESTING!!!!!!!!!!!
+
      /*Determine if the button is selected*/
      if(x >= bX  && x <= (bX + bWidth) && y <= bY && y >= (bY-bHeight)){
          //document.body.style.cursor = "pointer";
@@ -162,7 +158,6 @@ function mouseNearEnemy(e) {
       
       /*Determine if the mouse is right over the enemy*/
       if ((mx >= ex && mx <= eWidth) && (my >= ey && my <= eHeight)) {
-         //console.log("FOUND ENEMY");
          backgroundMusic.volume = 1.0;
          break;
       }
@@ -178,11 +173,8 @@ function mouseNearEnemy(e) {
          ex = enemy[i].xPos - spaceBuffer[a];
          ey = enemy[i].yPos - spaceBuffer[a];
          
-         //console.log("finding  enemy " + eWidth + " " + eHeight);
-         //console.log(a + " " + spaceBuffer[a]);
          /*modify the music volume based on distance*/
          if ((mx >= ex && mx <= eWidth) && (my >= ey && my <= eHeight)) {
-            //console.log("Near Enemy with buffer = " + spaceBuffer[a] + " " + a + " " +spaceBuffer.length );
             if (a < 0) {
                backgroundMusic.volume = 0.5;
             }
@@ -192,8 +184,6 @@ function mouseNearEnemy(e) {
             break;
          }
       }
-      
-      //console.log(mx + "," + my + " .... " + ex + "," + ey + "...." + eWidth + "," + eHeight);   
    }
 }
 
@@ -224,13 +214,9 @@ function foundEnemy(e) {
       
       /*Determine if the mouse is right over the enemy*/
       if ((mx >= ex && mx <= eWidth) && (my >= ey && my <= eHeight)) {
-         console.log("FOUND ENEMY");
          backgroundImg.gameRef.winner = "player";
          endGameFlag = true;
-         backgroundMusic.pause();
-         backgroundMusic = new Audio("mp3/NPC_Tin.mp3"); 
-         backgroundMusic.play(); 
-         backgroundMusic.volume = 1.0;
+         changeBgdMusic("mp3/NPC_Tin.mp3", 1.0);
          break;
       }
       

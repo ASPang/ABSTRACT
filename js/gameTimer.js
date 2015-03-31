@@ -40,12 +40,7 @@ function startTimer() {
    backgroundImg.gameRef.winner = "";
    
    /*Set and Add Background Music*/
-   backgroundMusic.volume = 0.0;
-   backgroundMusic.pause();
-   backgroundMusic = new Audio("mp3/NPC_Ffion.mp3"); 
-   backgroundMusic.play(); 
-   backgroundMusic.volume = 0.0;
-   backgroundMusic.loop = 1; //Set the music looping to be true
+   changeBgdMusic("mp3/NPC_Ffion.mp3", 0.0);
    
    gameTimer = setInterval(function(){updateGame();}, oneSec);  
 }
@@ -87,9 +82,6 @@ function updateGame() {
     backgroundImg.redraw(backgroundImg.xPos, backgroundImg.yPos);
     
     /*Draw the grid*/
-    // backgroundImg.drawGridLines();
-    // backgroundImg.showMazeSpan();
-    // turnBase();
     
     /*Redraw Character path*/    
     
@@ -108,12 +100,6 @@ function updateGame() {
     /*Show traps*/
     
     /*Check if the image intersects with anything on the canvas*/
-    //checkObstacles();
-    //characterHit();
-    //updatePath();
-    //characterHitLine();
-    //console.log("ing game timer " + character.xPos);
-    // hitLine(character, enemy[0], pathC, pathCCount, 1);
     
     /*Draw buttons*/
     if (pauseGame == false) {
@@ -151,7 +137,7 @@ function updateGame() {
         
         /*Display apporpriate message of whom is the winner*/
         if (backgroundImg.gameRef.winner == "player") {
-         backgroundImg.setGameOverMsg("You caught the assassin!", 40, 150, "bold 35px Arial", "red");
+         backgroundImg.setGameOverMsg("You caught the assassin!", 40, 150, "bold 35px Arial", "blue");
         }
         else if (backgroundImg.gameRef.winner == "enemy") {
          backgroundImg.setGameOverMsg("Sorry the assassin got away...", 25, 150, "bold 32px Arial", "red");
@@ -176,33 +162,18 @@ function moveEnemies() {
     var found;    
     
     /*Modify every alien image*/
-    for (i = 0; i< enemy.length; i++) {            
-        /*Determine if player found the enemy*/
-        /*Determine if enemy hit another path*/
-        //enemyPredictPath(enemy[i]);
-       
-        /*Determine if the enemy will hit a wall */
-        //enemyPredictWallColl(enemy[i]);
-        
-        //enemy[i].redraw(enemy[i].xPos + enemy[i].dx , enemy[i].yPos + enemy[i].dy);
-        enemy[i].redraw(enemy[i].xPos , enemy[i].yPos );
-        
-        /*Determine if the alien is off screen
-        if ((enemy[i].xPos) < 0) {
-            enemy[i].dx = -enemy[i].dx;
-        }
-        else if ((enemy[i].xPos + enemy[i].width) > backgroundImg.canvas.width) {
-            enemy[i].dx = -enemy[i].dx;
-        }
-        else if ((enemy[i].yPos + enemy[i].height) >= backgroundImg.canvas.height) {
-            endGameFlag = true;
-            enemy[i].dy = 0;
-            enemy[i].dx = 0;
-        }*/
-        
-        // if (enemy[i].canvasWallCollision() != "null") {
-          // endGameFlag = true;
-        // }
+    for (i = 0; i< enemy.length; i++) {               
+      if (backgroundImg.gameRef.winner == "player") {
+         enemy[i].image = gameImage.loadedImg["enemy3"];
+         character.image = gameImage.loadedImg["character2"];
+      }
+      else if (backgroundImg.gameRef.winner == "enemy") {
+         enemy[i].image = gameImage.loadedImg["enemy2"];
+         character.image = gameImage.loadedImg["character3"];         
+      }
+      //character.redraw(enemy[i].xPos + enemy[i].width, enemy[i].yPos);
+      character.redraw(220, 150);
+      enemy[i].redraw(enemy[i].xPos , enemy[i].yPos );   
     }
 }
 
@@ -287,8 +258,6 @@ function redrawPaths() {
 function redrawPaths(character, path, curColour, curWidth) {
     var i = 0, numPaths;
     var pX1, pY1, pX2, pY2; //points
-    /*var curColour = path.rbg;
-    var curWidth = path.lineWidth;*/
     
     numPaths = path.length; //Get the number of paths
     
@@ -486,251 +455,12 @@ function turnBase() {
    }   
 }
 
-
-
-// /*Move current character piece on the board*/
-// function moveCurChar(character) {
-   // var aryPos;
-   // var cord = [];
-   // var i;   //Loop counter
-   // //console.log("1.roll = " +  characterStop + " " + backgroundImg.gameRef.move);
-   // /*Determine the character's new area*/
-   // if (1 == characterStop && backgroundImg.gameRef.move > 0) {
-      // /*Get the array position*/
-      // specialSq(character, character.curGridLoc);
-      // aryPos = character.curGridLoc + character.dx;
-      // character.curGridLoc = aryPos;
-      
-      // cord = backgroundImg.aryPixelPos(character.curGridLoc); //Get the pixel location of the starting position
-      
-      // characterStop = 0;
-      
-      // console.log("STart to move charater " + " " + backgroundImg.gameRef.move + " " + cord[0] + " " + cord[1] + " " +  aryPos + " " +  character.dx + " " );
-   // }  
-   // else {
-      // cord = backgroundImg.aryPixelPos(character.curGridLoc); //Get the pixel location of the starting position
-   // }   
-   
-   // /***MOVE the character***/
-   // /*Figure out the direction*/   
-   // var dx = 1;
-   // var dy = 1;
-   
-   // if (character.dx == 1) {
-      // dx = 1;
-      // dy = 0;
-   // }
-   // else if (character.dx == (-1)) {
-      // dx = -1;
-      // dy = 0;
-   // }
-      
-   // else if (character.dx < 1) {
-      // dx = 0;
-      // dy = -1;
-   // }
-   // else if (character.dx > 1) {
-      // dx = 0;
-      // dy = 1;
-   // }
-   // else {
-      // dx = 0;
-      // dy = 0;
-   // }
-   
-   // if (0 == characterStop && character.xPos == cord[0] && character.yPos == cord[1] ) {      
-      // characterStop = 1;
-      // if (backgroundImg.gameRef.move > 0) {  //Move character
-         // backgroundImg.gameRef.move -= 1;
-      // } 
-   // }
-   // else if (0 == characterStop) {   //Move character
-      // character.redraw(character.xPos + dx, character.yPos + dy);
-   // }   
-   
-   // /*Determine if the player's turn has ended*/
-   // if (characterStop == 1 && backgroundImg.gameRef.move == 0) {  //Determine if the player has landed on a special square
-      // /*Get the array position*/
-      // var action = specialSq(character, character.curGridLoc);
-         // console.log("action " + action);
-      // if (action == "card") {  //Player has landed on a special square
-         // backgroundImg.gameRef.action = "showCard";
-         // cardUp = 1;
-      // }
-      // else if (action == "trap") {  //Player has landed on a trap
-         // backgroundImg.gameRef.action = "showTrap";
-      // }
-      // else {   //End player's turn
-         // backgroundImg.gameRef.action = "end";
-      // }
-   // }
-// }
-
-// /*Move current character back on the board*/
-// function moveCurCharBack(character) {
-   // var aryPos;
-   // var cord = [];
-   // var i;   //Loop counter
-
-   // /*Determine the character's new area*/
-   // if (character.curGridLoc == 32) {
-      // backgroundImg.gameRef.move = 0;
-      // characterStop = 1;
-   // }  
-   // else if (1 == characterStop && backgroundImg.gameRef.move > 0) {
-      // /*Get the array position*/
-      // specialSqBack(character, character.curGridLoc);
-      // aryPos = character.curGridLoc - character.dx;
-      // character.curGridLoc = aryPos;
-      
-      // cord = backgroundImg.aryPixelPos(character.curGridLoc); //Get the pixel location of the starting position
-      
-      // characterStop = 0;
-      
-      // console.log("STart to move charater " + " " + backgroundImg.gameRef.move + " " + cord[0] + " " + cord[1] + " " +  aryPos + " " +  character.dx + " " );
-   // }  
-   // else {
-      // cord = backgroundImg.aryPixelPos(character.curGridLoc); //Get the pixel location of the starting position
-   // }   
-   
-   // /***MOVE the character***/
-   // /*Figure out the direction*/   
-   // var dx = 1;
-   // var dy = 1;
-   
-   // if (character.dx == 1) {
-      // dx = -1;
-      // dy = 0;
-   // }
-   // else if (character.dx == (-1)) {
-      // dx = 1;
-      // dy = 0;
-   // }
-      
-   // else if (character.dx < 1) {
-      // dx = 0;
-      // dy = 1;
-   // }
-   // else if (character.dx > 1) {
-      // dx = 0;
-      // dy = -1;
-   // }
-   // else {
-      // dx = 0;
-      // dy = 0;
-   // }
-   
-   // if (0 == characterStop && character.xPos == cord[0] && character.yPos == cord[1] ) {      
-      // characterStop = 1;
-      // if (backgroundImg.gameRef.move > 0) {  //Move character
-         // backgroundImg.gameRef.move -= 1;
-      // } 
-   // }
-   // else if (0 == characterStop) {   //Move character
-      // character.redraw(character.xPos + dx, character.yPos + dy);
-   // }   
-   
-   // /*Determine if the player's turn has ended*/
-   // if (characterStop == 1 && backgroundImg.gameRef.move == 0) {  //Determine if the player has landed on a special square
-      // /*Get the array position*/
-      // var action = specialSqBack(character, character.curGridLoc);
-      
-      // if (action == "card") {  //Player has landed on a special square
-         // backgroundImg.gameRef.action = "showCard";
-         // cardUp = 1;
-      // }
-      // else if (action == "trap") {  //Player has landed on a trap
-         // backgroundImg.gameRef.action = "showTrap";
-      // }
-      // else {   //End player's turn
-         // backgroundImg.gameRef.action = "end";
-      // }
-   // }
-// }
-
-// /*Modify game if character lands on a special square*/
-// function specialSq(character, aryPos) {
-   // var grid = backgroundImg.grid
-   
-   // /*Determine the appropriate action*/
-   // if (grid[aryPos] == "right") {  //Directional change - Right
-      // character.dx = 1;
-   // }
-   // else if (grid[aryPos] == "up") { //Directional change - Up
-      // character.dx = -backgroundImg.gridCol;
-   // }
-   // else if (grid[aryPos] == "left") { //Directional change - Left
-      // character.dx = -1;
-   // }
-   // else if (grid[aryPos] == "down") { //Directional change - Down
-      // character.dx = backgroundImg.gridCol;
-   // }
-   // else if (grid[aryPos] == "end") {  //Reached the end
-      // character.dx = 0;
-      // backgroundImg.gameRef.winner.push(character);
-      // endGameFlag = true;  //Set the end game flag
-   // }
-   // else if (grid[aryPos] == "card") {  //Card
-      // return "card";
-   // }
-   // else if (grid[aryPos] == "trap") {  //Card
-      // return "trap";
-   // }
-   
-   // return "none";
-// }
-
-// /*Special squares when moving backwards*/
-// function specialSqBack(character, aryPos) {
-   // var grid = backgroundImg.grid
-   
-   // /*Determine the appropriate action*/
-   // if (grid[aryPos] == "right") {  //Directional change - Right - go Up
-      // character.dx = backgroundImg.gridCol;
-   // }
-   // else if (grid[aryPos] == "up") { //Directional change - Up - go left
-      // character.dx = 1;   
-   // }
-   // else if (grid[aryPos] == "left") { //Directional change - Left - go down
-      // character.dx = -backgroundImg.gridCol; 
-   // }
-   // else if (grid[aryPos] == "down") { //Directional change - Down - go right
-      // character.dx = -1; 
-   // }
-   // else if (grid[aryPos] == "card") {  //Card
-      // return "card";
-   // }
-   // else if (grid[aryPos] == "trap") {  //Card
-      // return "trap";
-   // }
-   
-   // return "none";
-// }
-
-/*Story generator*/
-// function genStory() {  
-   // var story;
-   
-   // if (backgroundImg.gameRef.turn == "wolf")  {
-      // story = genNumRange(1, 4);
-      // card.image = gameImage.loadedImg["card"+story];
-   // }
-   // else {
-      // story = genNumRange(5, 9);
-      // card.image = gameImage.loadedImg["card"+story];
-   // }
-// }
-
-// function showEndingStory(ending) {
-   // /*Size of image*/
-   // var height = 50;
-   // var width = 50;
-
-   // /*Add the character to the canvas*/
-   // var endingImg = new physics(gameCanvas, width, height, 100, 100);
-   
-   // endingImg.addImg(gameImage.loadedImg[ending]);
-// }
-
-
-
+/*Changes the music to something else*/
+function changeBgdMusic(music, volume) {
+   backgroundMusic.volume = 0.0;
+   backgroundMusic.pause();
+   backgroundMusic = new Audio(music); 
+   backgroundMusic.play(); 
+   backgroundMusic.volume = volume;
+   backgroundMusic.loop = 1; //Set the music looping to be true
+}

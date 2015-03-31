@@ -20,7 +20,8 @@ var ctxBlock;   //Block context
 var gameImage; //Object that'll store all the preloaded images
 var imgSrc = ["background",
  "door", "wall", "floor", "exit", "nothing",
- "introMenuBgd", "character", "character2", "enemy"];   //Name of images
+ "introMenuBgd", "character", "character2", "character3", 
+ "enemy", "enemy2", "enemy3"];   //Name of images
 var backgroundImg;  //background image object
 //var tileBackground = [];  //Tile background images
 var character;  //character image object
