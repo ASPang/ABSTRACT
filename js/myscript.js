@@ -25,20 +25,14 @@ function initGame() {
     setupCanvas();
     
     /*Add mouse event handlers*/
+    backgroundImg.canvas.addEventListener("click", foundEnemy, false); 
     backgroundImg.canvas.addEventListener("click", mouseClick, false);
     backgroundImg.canvas.addEventListener("mousemove", mouseLoc, false); 
     backgroundImg.canvas.addEventListener("mousemove", mouseNearEnemy, false); 
-    backgroundImg.canvas.addEventListener("click", foundEnemy, false); 
+    
     
     /*Display the Menu Screen*/
     menuScreen();
-}
-
-/*Initialize the canvas*/
-function setupCanvas2() {
-     /*Setting up the canvas*/
-    c = document.getElementById("gameCanvas");
-    ctx = c.getContext("2d");
 }
 
 /*Preload all the game images*/
@@ -139,7 +133,7 @@ function setupInterfaces() {
    backgroundImg.setStartButton("Start", 200, 325, "bold 24px Arial" );  //Set up the start button
    
    /*Set up the Game Over Interface screen*/
-   backgroundImg.setGameOverMsg("FINISH", 150, 100, "bold 60px Arial", "red");
+   backgroundImg.setGameOverMsg("", 150, 100, "bold 60px Arial", "red");
    backgroundImg.setNewGameButton("New Game", 175, 250,"bold 30px Arial", "black", "blue");
    
    /*Set up the Pause Game button in the Game Interface*/

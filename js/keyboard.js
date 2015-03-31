@@ -47,7 +47,7 @@ function keyDownEvent(e) {
             // left key pressed
             lastKey = e.keyCode;
             
-            leftArrowKeyEvent();
+            //leftArrowKeyEvent();
             
             break;
         case 38:
@@ -59,7 +59,7 @@ function keyDownEvent(e) {
             // right key pressed
             lastKey = e.keyCode;
             
-            rightArrowKeyEvent();
+            //rightArrowKeyEvent();
             
             break;
         case 40:

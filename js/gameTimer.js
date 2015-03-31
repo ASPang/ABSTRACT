@@ -37,10 +37,12 @@ function startTimer() {
    startClock = new Date().getTime();   
    endGameFlag = false;
    pauseGame = false;
+   backgroundImg.gameRef.winner = "";
    
    /*Set and Add Background Music*/
+   backgroundMusic.volume = 0.0;
    backgroundMusic.pause();
-   backgroundMusic = new Audio("mp3/NPC_Gilmore.mp3"); 
+   backgroundMusic = new Audio("mp3/NPC_Ffion.mp3"); 
    backgroundMusic.play(); 
    backgroundMusic.volume = 0.0;
    backgroundMusic.loop = 1; //Set the music looping to be true
@@ -74,6 +76,9 @@ function updateGame() {
     
     /*Calculate time lapse*/
     var timeElapse = Math.round((new Date().getTime() - startClock) / milSec) - pauseTime;
+    if (timeElapse < 0) {
+      timeElapse = 0;
+    }
 
     /*Clear the canvas*/
     backgroundImg.clearCanvas();
@@ -91,10 +96,10 @@ function updateGame() {
     /*Redraw Enemy path*/
         
     /*Draw the character*/
-    character.redraw(character.xPos, character.yPos);
+    //character.redraw(character.xPos, character.yPos);
     
     /*Update Enemy position*/
-    moveEnemies();
+    //moveEnemies();
      
     /*Draw the Die*/
     
@@ -137,9 +142,20 @@ function updateGame() {
         pathE = [];
         lastKey = 37;
         
+        /*Reveal Enemy Location*/
+        moveEnemies();
+    
         /*Stop the character from moving*/
         character.dx = 0;
         character.dy = 0;
+        
+        /*Display apporpriate message of whom is the winner*/
+        if (backgroundImg.gameRef.winner == "player") {
+         backgroundImg.setGameOverMsg("You caught the assassin!", 40, 150, "bold 35px Arial", "red");
+        }
+        else if (backgroundImg.gameRef.winner == "enemy") {
+         backgroundImg.setGameOverMsg("Sorry the assassin got away...", 25, 150, "bold 32px Arial", "red");
+        }
         
         /*Displayed Elapse time*/     
         backgroundImg.canvasCtx.fillText("Elapse Time: " + timeElapse + "s", backgroundImg.canvas.width / 2 - 60, 225);

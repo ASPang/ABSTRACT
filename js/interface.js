@@ -110,15 +110,11 @@ imageLib.prototype.setTitle = function(text, xPos, yPos, fontSize, fontWeight, f
    
    /*Parse the style string*/
    fontStyle = this.parseFontStyle(style);
-   //console.log(fontStyle[0]+ " "  + fontStyle[1]+ " "  + fontStyle[2]); //TESTING!!!!!!!!!!!!!
    
    /*Determine the width and height of the button*/
    this.canvasCtx.font = style; //Temporary apply the style on the canvas
    width = Math.floor(this.canvasCtx.measureText(text).width);
    height =  fontStyle[1].substring(0,fontStyle[1].length-2); //substring(startPosition,length)
-   
-   /*console.log("wdith " + width + " height " + height); //TESTING!!!!!!!!!!!!!
-   console.log(xPos + " " + yPos);*/
    
    /*Save the button properties*/   
    this.button["startButton"] = {

@@ -24,12 +24,10 @@ function mouseClick(e) {
    /*Determine the action for the appropriate button*/
    if (button == "startButton" || button == "newGame") { //Start game button
       if (button == "newGame") {  //Reset up the canvas for a new game
+         backgroundMusic.volume = 0.0;
+         backgroundMusic.pause();
          setupCanvas();
       }
-      
-      /*Stop the music*/
-      backgroundMusic.volume = 0;
-      backgroundMusic.pause();
       
       /*Update the game screen flag*/
       screenDisplayed = "gameScreen";
@@ -57,6 +55,15 @@ function mouseClick(e) {
       backgroundImg.gameRef.action = "end";
       console.log("clicked - no");
    }
+   else if (endGameFlag == false && backgroundImg.gameRef.winner == "" && pauseGame == false) {
+         /*Player didn't find the enemy*/
+         backgroundImg.gameRef.winner = "enemy";
+         endGameFlag = true;
+         backgroundMusic.pause();
+         backgroundMusic = new Audio("mp3/cutscene14.mp3"); 
+         backgroundMusic.play(); 
+         backgroundMusic.volume = 1.0;
+      }
 }
  
 /*Determine the current location of the mouse*/
@@ -155,7 +162,7 @@ function mouseNearEnemy(e) {
       
       /*Determine if the mouse is right over the enemy*/
       if ((mx >= ex && mx <= eWidth) && (my >= ey && my <= eHeight)) {
-         console.log("FOUND ENEMY");
+         //console.log("FOUND ENEMY");
          backgroundMusic.volume = 1.0;
          break;
       }
@@ -172,21 +179,21 @@ function mouseNearEnemy(e) {
          ey = enemy[i].yPos - spaceBuffer[a];
          
          //console.log("finding  enemy " + eWidth + " " + eHeight);
-         console.log(a + " " + spaceBuffer[a]);
+         //console.log(a + " " + spaceBuffer[a]);
          /*modify the music volume based on distance*/
          if ((mx >= ex && mx <= eWidth) && (my >= ey && my <= eHeight)) {
-            console.log("Near Enemy with buffer = " + spaceBuffer[a] + " " + a + " " +spaceBuffer.length );
-            if (a == 0) {
+            //console.log("Near Enemy with buffer = " + spaceBuffer[a] + " " + a + " " +spaceBuffer.length );
+            if (a < 0) {
                backgroundMusic.volume = 0.5;
             }
             else {
-               backgroundMusic.volume = 0.5 - (a/10);  
+               backgroundMusic.volume = 0.4 - (a/10 * 2);  
             }
             break;
          }
       }
       
-      console.log(mx + "," + my + " .... " + ex + "," + ey + "...." + eWidth + "," + eHeight);   
+      //console.log(mx + "," + my + " .... " + ex + "," + ey + "...." + eWidth + "," + eHeight);   
    }
 }
 
@@ -218,6 +225,7 @@ function foundEnemy(e) {
       /*Determine if the mouse is right over the enemy*/
       if ((mx >= ex && mx <= eWidth) && (my >= ey && my <= eHeight)) {
          console.log("FOUND ENEMY");
+         backgroundImg.gameRef.winner = "player";
          endGameFlag = true;
          backgroundMusic.pause();
          backgroundMusic = new Audio("mp3/NPC_Tin.mp3"); 
@@ -225,5 +233,6 @@ function foundEnemy(e) {
          backgroundMusic.volume = 1.0;
          break;
       }
+      
    }
 }
